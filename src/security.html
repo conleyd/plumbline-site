@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Security design | Plumbline</title>
+  <meta name="description" content="How Plumbline is designed to protect data: per-company encryption keys, read-only connectors, append-only evidence storage and tenant isolation. No SOC 2 report has been issued yet.">
+  <link rel="canonical" href="__BASE_URL__/security.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html"><svg viewBox="0 0 22 32" aria-hidden="true" focusable="false"><path d="M2 2h18M11 2v17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M11 18l6 6-6 7-6-7z" fill="currentColor"/></svg><span>Plumbline</span></a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html">Product</a></li>
+        <li><a href="integrations.html">Integrations</a></li>
+        <li><a href="security.html" aria-current="page">Security</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+    <div class="wrap">
+      <p class="eyebrow">Security</p>
+      <h1>Security design</h1>
+      <p class="lede">This page describes what Plumbline is built to do. It describes the design, not an audited result.</p>
+
+      <div class="notice">
+        <p><strong>No certification yet</strong>No SOC 2 report or other security certification has been issued for Plumbline. Nothing on this site should be read as a claim of one.</p>
+      </div>
+
+      <section aria-labelledby="keys" class="prose">
+        <h2 id="keys">Per-company encryption</h2>
+        <ul>
+          <li>Each company has its own data key. The key is created with AWS Key Management Service, stored only in wrapped form, and bound to the company's ID, so it cannot be used to decrypt another company's data.</li>
+          <li>Connector credentials, financial amounts, work email addresses, uploaded files and evidence files are encrypted with AES-256-GCM under that key. Each encrypted value is bound to its company, field and row, so it cannot be copied elsewhere and still decrypt.</li>
+          <li>Data keys rotate every year, and on demand after an incident.</li>
+          <li>The database, backups and file storage are also encrypted at rest with separate AWS-managed keys. Traffic is encrypted in transit with TLS 1.2 or later.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="isolation" class="prose">
+        <h2 id="isolation">Company isolation</h2>
+        <ul>
+          <li>Each company's rows are separated in the database by row-level security, behind a company-scoped data layer and tests that check every table is covered.</li>
+          <li>Sponsor accounts cannot read portfolio company tables at all. They read separate aggregate tables, and only while a data agreement is in force.</li>
+          <li>No figure covering fewer than five people is shown to anyone other than the person it describes, and rules stop small groups being recovered by subtracting one total from another.</li>
+          <li>Roles are enforced in the data layer, not only by hiding things in the interface.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="read-only" class="prose">
+        <h2 id="read-only">Read-only connectors</h2>
+        <p>Every connector requests the narrowest read scope the vendor offers. A test fails if any connector calls a write method that its definition does not declare. The design allows only four kinds of write, each limited as shown:</p>
+        <ul>
+          <li>Plumbline's own package objects in a Salesforce org that installs the optional package (configuration, license state and OAuth linkage only).</li>
+          <li>Direct messages in Slack or Microsoft Teams. There is no method for posting to channels.</li>
+          <li>Opt-in task mirroring into one project the company's admin chooses. Off by default.</li>
+          <li>Publishing an approved pack or answer to a data room, with a named approver for each publish.</li>
+        </ul>
+        <p>Agents never handle passwords. Every sign-in is OAuth, an app install, or a key that a person at the company pastes in. See <a href="integrations.html">Integrations and data use</a> for each source's scopes.</p>
+      </section>
+
+      <section aria-labelledby="evidence" class="prose">
+        <h2 id="evidence">Evidence storage</h2>
+        <ul>
+          <li>Evidence and audit records are append-only. The application can add and read them, but not change or delete them.</li>
+          <li>Each company's records form a SHA-256 hash chain, which is recomputed every night; a mismatch pages the on-call engineer.</li>
+          <li>Evidence files are kept in storage with object lock, retained for seven years unless the company closes its account.</li>
+          <li>AI output is a proposal until a named person approves it. No AI tool can write data without that approval.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="privacy-design" class="prose">
+        <h2 id="privacy-design">Individuals</h2>
+        <ul>
+          <li>The content of AI prompts and chats is never collected. Incoming usage data is checked against an allowlist of counts and metadata, and unknown fields are dropped.</li>
+          <li>There are no leaderboards and no ranked lists of people.</li>
+          <li>Every read of raw financials or one person's data is logged, and the company's admin can see that log.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="closing" class="prose">
+        <h2 id="closing">Closing an account</h2>
+        <p>When a company exports and closes its account, Plumbline revokes its sessions and connector credentials, deletes its live data, and destroys its data keys, which leaves its encrypted evidence files unreadable. Backups holding its data expire by day 28. A deletion certificate is issued on day 30.</p>
+      </section>
+
+      <section aria-labelledby="report" class="prose">
+        <h2 id="report">Reporting a security issue</h2>
+        <p>Email <a href="mailto:__CONTACT_EMAIL__">__CONTACT_EMAIL__</a>.</p>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="integrations.html">Integrations and data use</a></li>
+          <li><a href="security.html">Security</a></li>
+          <li><a href="privacy.html">Privacy policy (draft)</a></li>
+          <li><a href="terms.html">Terms (draft)</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <p>Plumbline is in development. These pages describe how the system is designed to work.</p>
+      <p>This site sets no cookies and runs no scripts.</p>
+    </div>
+  </footer>
+</body>
+</html>

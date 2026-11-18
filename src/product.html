@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How it works: onboarding a portfolio company | Plumbline</title>
+  <meta name="description" content="How a portfolio company starts on Plumbline: accept an invitation, connect tools through a five-step read-only connection, then see AI adoption across the company with its evidence.">
+  <link rel="canonical" href="__BASE_URL__/product.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html"><svg viewBox="0 0 22 32" aria-hidden="true" focusable="false"><path d="M2 2h18M11 2v17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M11 18l6 6-6 7-6-7z" fill="currentColor"/></svg><span>Plumbline</span></a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html" aria-current="page">Product</a></li>
+        <li><a href="integrations.html">Integrations</a></li>
+        <li><a href="security.html">Security</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+    <div class="wrap">
+      <p class="eyebrow">Product</p>
+      <h1>How a portfolio company gets started</h1>
+      <p class="lede">Onboarding has three parts: accept the invitation, connect the company's tools, and see where AI adoption stands across the company, with the evidence for each reading.</p>
+
+      <figure>
+        <svg class="fig-sm" viewBox="0 0 320 330" role="img" aria-labelledby="flow-t flow-d">
+          <title id="flow-t">Onboarding flow</title>
+          <desc id="flow-d">Three steps from top to bottom: 1, invite; 2, connect tools; 3, see the AI-adoption heatmap.</desc>
+          <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="d-head" d="M0 0L10 5L0 10z"/></marker></defs>
+          <rect class="d-box" x="5" y="5" width="310" height="86" rx="6"/>
+          <text class="d-small" x="24" y="32">Step 1</text>
+          <text class="d-strong" x="24" y="56">Invite</text>
+          <text class="d-small" x="24" y="77">Email link or company sign-on</text>
+          <line class="d-line" x1="160" y1="93" x2="160" y2="118" marker-end="url(#arr)"/>
+          <rect class="d-box" x="5" y="122" width="310" height="86" rx="6"/>
+          <text class="d-small" x="24" y="149">Step 2</text>
+          <text class="d-strong" x="24" y="173">Connect tools</text>
+          <text class="d-small" x="24" y="194">Read-only, or upload a file</text>
+          <line class="d-line" x1="160" y1="210" x2="160" y2="235" marker-end="url(#arr)"/>
+          <rect class="d-accent" x="5" y="239" width="310" height="86" rx="6"/>
+          <text class="d-small" x="24" y="266">Step 3</text>
+          <text class="d-strong" x="24" y="290">See the heatmap</text>
+          <text class="d-small" x="24" y="311">Every cell shows its evidence</text>
+        </svg>
+      </figure>
+
+      <section aria-labelledby="s1" class="prose">
+        <h2 id="s1">1. Invite</h2>
+        <p>Each contact at the portfolio company receives an email invitation. The link works once, is bound to the invited email address, and expires after 72 hours.</p>
+        <p>People can also sign in with their company's single sign-on through Microsoft Entra ID or Google. A company can require single sign-on for all of its members.</p>
+        <p>A sponsor sees nothing from a portfolio company until that company accepts a data agreement. The agreement sets what aggregates the sponsor may read, and accepting or changing it is recorded in the company's audit log.</p>
+      </section>
+
+      <section aria-labelledby="s2">
+        <h2 id="s2">2. Connect tools</h2>
+        <p class="prose">Every source is connected through the same five steps, shown in a side panel. The panel is generated from the same registry entry the connector code runs from, so what it says a connector reads is what the connector reads.</p>
+        <figure>
+          <svg class="fig-md" viewBox="0 0 420 367" role="img" aria-labelledby="panel-t panel-d">
+            <title id="panel-t">The five-step connect panel</title>
+            <desc id="panel-d">Five stacked steps: why connect; sign in or add key; review what we read and never read; map and match; test and preview. Below them, a file upload is available in place of any connection.</desc>
+            <rect class="d-box" x="5" y="5" width="410" height="48" rx="6"/>
+            <text class="d-strong" x="22" y="35">1  Why connect</text>
+            <rect class="d-box" x="5" y="63" width="410" height="48" rx="6"/>
+            <text class="d-strong" x="22" y="93">2  Sign in or add key</text>
+            <rect class="d-accent" x="5" y="121" width="410" height="48" rx="6"/>
+            <text class="d-strong" x="22" y="151">3  Review what we read and never read</text>
+            <rect class="d-box" x="5" y="179" width="410" height="48" rx="6"/>
+            <text class="d-strong" x="22" y="209">4  Map and match</text>
+            <rect class="d-box" x="5" y="237" width="410" height="48" rx="6"/>
+            <text class="d-strong" x="22" y="267">5  Test and preview</text>
+            <rect class="d-box" x="5" y="301" width="410" height="60" rx="6" stroke-dasharray="6 5"/>
+            <text class="d-strong" x="22" y="327">Or upload a file</text>
+            <text class="d-small" x="22" y="348">Available in place of any connection</text>
+          </svg>
+        </figure>
+        <ol class="steps">
+          <li><strong>Why connect.</strong> Which checklist items the source can verify and which measures it feeds.</li>
+          <li><strong>Sign in or add key.</strong> An OAuth sign-in, an app install, or an API key that a person at the company pastes in. Plumbline's agents never handle passwords.</li>
+          <li><strong>Review what we read and never read.</strong> The data read, the data never read, and each permission requested with the reason for it. If the vendor grants narrower permissions than requested, the panel shows which are missing.</li>
+          <li><strong>Map and match.</strong> How accounts in the source are matched to people, and any mapping the company sets once, such as which roles carry a sales quota.</li>
+          <li><strong>Test and preview.</strong> One bounded read, with at most 20 sample rows shown and not stored.</li>
+        </ol>
+        <div class="prose">
+          <p>After the first successful test, Plumbline reads the last 90 days of history, newest first, so results can start before the backfill finishes. For Salesforce it reads all open opportunities and those closed in the last twelve months, because revenue measures need the whole book.</p>
+          <p>A connection can be revoked at any time. Revoking calls the vendor's revoke endpoint where one exists, deletes the stored credential, and stops queued work. History already collected stays, with its evidence.</p>
+          <p>The exact permissions for each source are on <a href="integrations.html">Integrations and data use</a>.</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="s3">
+        <h2 id="s3">3. See the AI-adoption heatmap</h2>
+        <p class="prose">The heatmap shows where AI adoption stands across the company's functions. Each cell carries how well its reading is supported, not only the reading itself.</p>
+        <figure>
+          <svg class="fig-md" viewBox="0 0 440 290" role="img" aria-labelledby="hm-t hm-d">
+            <title id="hm-t">Illustrative heatmap layout</title>
+            <desc id="hm-d">A grid with four function rows and three measure columns. Shading shows the stage of each cell. Some cells are marked Verified, Attested, Stale or Not connected. Illustrative only; no real data.</desc>
+            <text class="d-small" x="106" y="22">Measure 1</text>
+            <text class="d-small" x="218" y="22">Measure 2</text>
+            <text class="d-small" x="330" y="22">Measure 3</text>
+            <text class="d-text" x="4" y="67">Function A</text>
+            <rect class="h1" x="100" y="36" width="104" height="54" rx="4"/>
+            <text class="d-text" x="108" y="68">Verified</text>
+            <rect class="h2" x="212" y="36" width="104" height="54" rx="4"/>
+            <rect class="h0" x="324" y="36" width="104" height="54" rx="4"/>
+            <text class="d-small" x="332" y="68">Not connected</text>
+            <text class="d-text" x="4" y="129">Function B</text>
+            <rect class="h2" x="100" y="98" width="104" height="54" rx="4"/>
+            <rect class="h1" x="212" y="98" width="104" height="54" rx="4"/>
+            <text class="d-text" x="220" y="130">Attested</text>
+            <rect class="h3" x="324" y="98" width="104" height="54" rx="4"/>
+            <text class="d-text" x="4" y="191">Function C</text>
+            <rect class="h0" x="100" y="160" width="104" height="54" rx="4"/>
+            <text class="d-text" x="108" y="192">Stale</text>
+            <rect class="h1" x="212" y="160" width="104" height="54" rx="4"/>
+            <rect class="h2" x="324" y="160" width="104" height="54" rx="4"/>
+            <text class="d-text" x="4" y="253">Function D</text>
+            <rect class="h3" x="100" y="222" width="104" height="54" rx="4"/>
+            <rect class="h2" x="212" y="222" width="104" height="54" rx="4"/>
+            <rect class="h1" x="324" y="222" width="104" height="54" rx="4"/>
+          </svg>
+          <figcaption>Illustrative layout only. The labels are placeholders and the grid holds no real data.</figcaption>
+        </figure>
+        <dl class="prose">
+          <dt><strong>Attested</strong></dt><dd>A named person at the company confirmed it.</dd>
+          <dt><strong>Verified</strong></dt><dd>A connected source shows it. Connecting a source moves its cells from Attested to Verified.</dd>
+          <dt><strong>Stale</strong></dt><dd>The source is more than one cycle late or the connection is no longer live. The last good value stays on screen with its date and a lower confidence.</dd>
+          <dt><strong>Not connected</strong></dt><dd>No value has ever arrived. The cell says so and links to the connect panel. It never shows zero.</dd>
+        </dl>
+        <p class="prose">Opening any cell shows where its number came from. Suggestions made by AI stay proposals until a named person approves them. A sponsor sees the same picture only as company and function aggregates covering five or more people.</p>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="integrations.html">Integrations and data use</a></li>
+          <li><a href="security.html">Security</a></li>
+          <li><a href="privacy.html">Privacy policy (draft)</a></li>
+          <li><a href="terms.html">Terms (draft)</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <p>Plumbline is in development. These pages describe how the system is designed to work.</p>
+      <p>This site sets no cookies and runs no scripts.</p>
+    </div>
+  </footer>
+</body>
+</html>

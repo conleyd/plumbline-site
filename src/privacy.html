@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy policy (draft) | Plumbline</title>
+  <meta name="description" content="Draft privacy policy for Plumbline, pending legal review: what data is collected, who it is shared with, how long it is kept, and how to have it deleted.">
+  <link rel="canonical" href="__BASE_URL__/privacy.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html"><svg viewBox="0 0 22 32" aria-hidden="true" focusable="false"><path d="M2 2h18M11 2v17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M11 18l6 6-6 7-6-7z" fill="currentColor"/></svg><span>Plumbline</span></a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html">Product</a></li>
+        <li><a href="integrations.html">Integrations</a></li>
+        <li><a href="security.html">Security</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+    <div class="wrap">
+      <div class="draft-banner" role="note">Draft, pending legal review<span>This text has not been reviewed by counsel and is not yet a binding policy.</span></div>
+      <h1>Privacy policy</h1>
+      <p class="lede">What Plumbline collects, who sees it, how long it is kept, and how to have it deleted.</p>
+
+      <section aria-labelledby="site" class="prose">
+        <h2 id="site">This website</h2>
+        <p>This website sets no cookies, runs no scripts, has no forms and uses no analytics or tracking. It is hosted on GitHub Pages, which, as the host, receives the technical details any web request carries, such as IP address.</p>
+      </section>
+
+      <section aria-labelledby="roles" class="prose">
+        <h2 id="roles">Who is responsible for the data</h2>
+        <p>For the data of a portfolio company's employees, the portfolio company is the controller and Plumbline is the processor. For a sponsor's own users and the aggregates it receives, Plumbline is the sponsor's processor.</p>
+      </section>
+
+      <section aria-labelledby="collected" class="prose">
+        <h2 id="collected">What data is collected</h2>
+        <ul>
+          <li><strong>Account data:</strong> name, work email address and single sign-on identity for people who use Plumbline.</li>
+          <li><strong>Data from connected sources:</strong> only what <a href="integrations.html">Integrations and data use</a> lists for each source, and never what it lists as not read.</li>
+          <li><strong>Directory data:</strong> people, managers, departments and start and end dates, used to match accounts to people.</li>
+          <li><strong>Per-person AI usage:</strong> counts and metadata only, such as sessions, commits and cost. The content of AI prompts and chats is never collected.</li>
+          <li><strong>Uploaded files and evidence</strong> that a company chooses to provide, such as financial packs and screenshots. Image metadata is removed on upload.</li>
+          <li><strong>Audit records</strong> of sign-ins, approvals, exports, connector changes and every read of raw financials or one person's data.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="who-sees" class="prose">
+        <h2 id="who-sees">Who sees it</h2>
+        <ul>
+          <li>Each person sees their own detail. A manager sees a person's detail only if that person chooses to share it, and the person can stop sharing at any time.</li>
+          <li>Sponsors see only company and function aggregates covering five or more people, and only while a data agreement with the portfolio company is in force. Sponsors never see raw financials or any individual's data.</li>
+          <li>No Plumbline staff member can view connector credentials. Support access to a company's data needs a grant the company's admin can see and revoke, and is logged.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="shared" class="prose">
+        <h2 id="shared">Who it is shared with</h2>
+        <p>None. Plumbline does not sell data or share it with any third party for that party's own use.</p>
+        <p>To run the service, Plumbline uses these service providers, which process data only on Plumbline's behalf:</p>
+        <div class="table-wrap">
+          <table>
+            <caption>Service providers</caption>
+            <thead><tr><th scope="col">Provider</th><th scope="col">Purpose</th></tr></thead>
+            <tbody>
+              <tr><td>Amazon Web Services</td><td>Hosting and email delivery</td></tr>
+              <tr><td>Anthropic</td><td>AI processing</td></tr>
+              <tr><td>Merge</td><td>Connection to HR and accounting systems</td></tr>
+              <tr><td>Expo</td><td>Mobile push delivery: device tokens and notification text only, with no measures in the message</td></tr>
+              <tr><td>Slack and Microsoft</td><td>Digests and direct messages, through apps the company installs</td></tr>
+              <tr><td>Sentry</td><td>Error reports, with personal data removed</td></tr>
+              <tr><td>Stripe</td><td>Billing contacts only</td></tr>
+              <tr><td>Salesforce</td><td>The optional managed package and license management</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="retention" class="prose">
+        <h2 id="retention">Retention</h2>
+        <div class="table-wrap">
+          <table>
+            <caption>How long data is kept</caption>
+            <thead><tr><th scope="col">Data</th><th scope="col">Kept for</th></tr></thead>
+            <tbody>
+              <tr><td>Connector credentials</td><td>Until the connection is revoked or the account closes; then deleted</td></tr>
+              <tr><td>Raw per-person usage records</td><td>25 months on a rolling basis; aggregates are kept</td></tr>
+              <tr><td>Raw incoming webhook payloads</td><td>30 days</td></tr>
+              <tr><td>Evidence records and files</td><td>7 years, unless the company closes its account</td></tr>
+              <tr><td>Audit records</td><td>13 months in the live database, 7 years in archive</td></tr>
+              <tr><td>Database backups</td><td>14 days for point-in-time recovery, 21 days for backup copies</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="deletion" class="prose">
+        <h2 id="deletion">Deletion on request</h2>
+        <ul>
+          <li><strong>A company</strong> can export its data and close its account at any time. Live data is deleted, the company's data keys are destroyed so that encrypted evidence cannot be read, backups expire by day 28, and a deletion certificate is issued on day 30. The certificate lists what is kept: scores a selling sponsor has already seen, anonymised benchmark contributions, and the record of the closure itself.</li>
+          <li><strong>An employee</strong> of a portfolio company can ask for a copy of their data or for it to be erased. Requests go through the company's admin, because the company is the controller.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="privacy-contact" class="prose">
+        <h2 id="privacy-contact">Contact</h2>
+        <p>Email <a href="mailto:__CONTACT_EMAIL__">__CONTACT_EMAIL__</a>.</p>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="integrations.html">Integrations and data use</a></li>
+          <li><a href="security.html">Security</a></li>
+          <li><a href="privacy.html">Privacy policy (draft)</a></li>
+          <li><a href="terms.html">Terms (draft)</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <p>Plumbline is in development. These pages describe how the system is designed to work.</p>
+      <p>This site sets no cookies and runs no scripts.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Integrations and data use | Plumbline</title>
+  <meta name="description" content="What Plumbline reads and never reads from Salesforce, Microsoft Entra ID and Ramp, the exact permission scopes it requests, and how read-only access is enforced.">
+  <link rel="canonical" href="__BASE_URL__/integrations.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html"><svg viewBox="0 0 22 32" aria-hidden="true" focusable="false"><path d="M2 2h18M11 2v17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M11 18l6 6-6 7-6-7z" fill="currentColor"/></svg><span>Plumbline</span></a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html">Product</a></li>
+        <li><a href="integrations.html" aria-current="page">Integrations</a></li>
+        <li><a href="security.html">Security</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+    <div class="wrap">
+      <p class="eyebrow">Integrations and data use</p>
+      <h1>What Plumbline reads from each source</h1>
+      <p class="lede">Every connector is read-only by default and requests the narrowest read permission the vendor offers. This page lists, for each source, what Plumbline reads, what it never reads, and the exact permissions it requests.</p>
+
+      <section aria-labelledby="common" class="prose">
+        <h2 id="common">Rules that apply to every source</h2>
+        <ul>
+          <li><strong>Read-only.</strong> A test in the codebase fails if any connector calls an HTTP method other than GET or HEAD, or a read-only query, unless that connector declares an allowed write. The few allowed writes are listed on the <a href="security.html#read-only">Security</a> page; none of them touches data in the sources on this page.</li>
+          <li><strong>Credentials.</strong> Tokens and keys are encrypted with AES-256-GCM under the company's own data key and decrypted only inside the task that calls the vendor. No person, including Plumbline staff, can view them; admin screens show only the scopes granted and the dates.</li>
+          <li><strong>Revoke at any time.</strong> Revoking deletes the stored credential and stops queued work. It also calls the vendor's token revocation where the vendor offers it.</li>
+          <li><strong>Upload instead.</strong> Each source has a file-upload alternative for companies that prefer not to connect it.</li>
+          <li><strong>Rate limits.</strong> Each connector stays under the vendor's published limit, leaving headroom for the company's own tools.</li>
+        </ul>
+      </section>
+
+      <section class="source" aria-labelledby="sf">
+        <h2 id="sf">Salesforce <span class="tag">CRM</span></h2>
+        <p class="prose">Used to measure AI revenue share, AI attach rate, revenue per sales rep, AI features live and priced, and AI ticket resolution from Service Cloud cases.</p>
+        <div class="facts">
+          <div>
+            <h3>What we read</h3>
+            <ul>
+              <li>Products and price books (<code>Product2</code>, <code>Pricebook2</code>, <code>PricebookEntry</code>)</li>
+              <li>Opportunities and their line items (<code>Opportunity</code>, <code>OpportunityLineItem</code>)</li>
+              <li>Users and roles (<code>User</code>, <code>UserRole</code>)</li>
+              <li>Cases (<code>Case</code>)</li>
+              <li>Task and Event metadata only: type, created by, owner and dates</li>
+              <li>Product descriptions, held in memory to classify AI products and stored only as a SHA-256 hash</li>
+            </ul>
+          </div>
+          <div>
+            <h3>What we never read</h3>
+            <ul>
+              <li>Account contact details</li>
+              <li>Notes</li>
+              <li>Email bodies</li>
+              <li>Task and Event subjects, descriptions or bodies</li>
+              <li>Any object not listed on the left</li>
+            </ul>
+          </div>
+        </div>
+        <h3>Permissions requested</h3>
+        <div class="table-wrap">
+          <table>
+            <caption>Salesforce permissions</caption>
+            <thead><tr><th scope="col">Requested</th><th scope="col">Why</th></tr></thead>
+            <tbody>
+              <tr><td>OAuth scopes <code>api</code> and <code>refresh_token</code>, through the OAuth 2.0 web-server flow with PKCE</td><td>Run read queries and keep the connection alive without asking again</td></tr>
+              <tr><td>A dedicated integration user with a read-only permission set: Read and View All on the eight objects above, and Read on Task and Event metadata fields</td><td>Limit access to exactly the records listed</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="prose"><strong>Not requested:</strong> Modify All Data, View All Data, the <code>full</code> scope, any write permission on standard objects, and Task or Event bodies.</p>
+        <h3>Read-only</h3>
+        <div class="prose">
+          <p>Access to Salesforce records is read-only. Large initial reads use Bulk API 2.0 query jobs; creating or cancelling a query job writes no record data. Plumbline caps its own use at 5% of the org's daily API request allocation.</p>
+          <p>Salesforce data is processed in Plumbline's cloud, not in the customer's org. Companies that install the optional Plumbline managed package store only connector configuration, license state and OAuth linkage in the package's own objects in their org. The package declares no write permission on standard objects. Its change-event triggers send only record IDs, changed field names and timestamps, and Plumbline then re-reads the records through the read-only API.</p>
+          <p><strong>Without connecting:</strong> upload a CSV export of an opportunities report with product lines.</p>
+        </div>
+      </section>
+
+      <section class="source" aria-labelledby="entra">
+        <h2 id="entra">Microsoft Entra ID <span class="tag">Identity</span></h2>
+        <p class="prose">Used for single sign-on to Plumbline and, when the company enables it, to find which AI tools people sign in to, which AI apps have been granted access, and whether single sign-on is enforced on AI tools.</p>
+        <div class="facts">
+          <div>
+            <h3>What we read</h3>
+            <ul>
+              <li>Users and groups</li>
+              <li>Sign-ins to applications</li>
+              <li>OAuth permission grants to third-party applications, and service principals</li>
+            </ul>
+          </div>
+          <div>
+            <h3>What we never read</h3>
+            <ul>
+              <li>Passwords</li>
+              <li>Mail</li>
+              <li>Calendar</li>
+              <li>Files</li>
+            </ul>
+          </div>
+        </div>
+        <h3>Permissions requested</h3>
+        <div class="table-wrap">
+          <table>
+            <caption>Microsoft Entra ID permissions</caption>
+            <thead><tr><th scope="col">Requested</th><th scope="col">Why</th></tr></thead>
+            <tbody>
+              <tr><td>OpenID Connect sign-in, with PKCE</td><td>Let people sign in to Plumbline with their company account</td></tr>
+              <tr><td><code>User.Read.All</code> (application)</td><td>List the people in the directory</td></tr>
+              <tr><td><code>Group.Read.All</code> (application)</td><td>List groups, used for teams and functions</td></tr>
+              <tr><td><code>AuditLog.Read.All</code> and <code>Directory.Read.All</code> (application)</td><td>Read application sign-in logs and OAuth grants, to find which AI tools are in use</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="prose"><strong>Not requested:</strong> any mail, calendar or file scope, and any scope that writes to the directory. Reading sign-in logs requires an Entra ID P1 or P2 licence; the connect panel warns when a 90-day history is not available.</p>
+        <h3>Read-only</h3>
+        <div class="prose">
+          <p>Plumbline writes nothing to the directory. If the company sets up SCIM provisioning, the company's identity provider pushes users to Plumbline; Plumbline does not write back.</p>
+          <p><strong>Without connecting:</strong> upload a CSV of users and app assignments, or a sign-in report export.</p>
+        </div>
+      </section>
+
+      <section class="source" aria-labelledby="ramp">
+        <h2 id="ramp">Ramp <span class="tag">Spend</span></h2>
+        <p class="prose">Used to measure AI spend per employee and to find AI tools that are expensed twice or bought outside approved channels.</p>
+        <div class="facts">
+          <div>
+            <h3>What we read</h3>
+            <ul>
+              <li>Card transactions: merchant, amount, date, cardholder and the last four digits of the card</li>
+              <li>Users, to match cardholders to people</li>
+            </ul>
+          </div>
+          <div>
+            <h3>What we never read</h3>
+            <ul>
+              <li>Transaction memos</li>
+              <li>Full card numbers, which are not requested</li>
+              <li>Receipts, which are not downloaded</li>
+            </ul>
+          </div>
+        </div>
+        <h3>Permissions requested</h3>
+        <div class="table-wrap">
+          <table>
+            <caption>Ramp permissions</caption>
+            <thead><tr><th scope="col">Requested</th><th scope="col">Why</th></tr></thead>
+            <tbody>
+              <tr><td><code>transactions:read</code></td><td>Read card transactions to find AI tools and their cost</td></tr>
+              <tr><td><code>users:read</code></td><td>Match each cardholder to a person</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="prose"><strong>Not requested:</strong> card management and payments. Access is granted through OAuth 2.0 by a Ramp user with Developer API permission.</p>
+        <h3>Read-only</h3>
+        <div class="prose">
+          <p>Plumbline only reads from Ramp, once a day. It cannot issue, change or freeze cards, or move money.</p>
+          <p><strong>Without connecting:</strong> upload a statement as CSV (date, merchant, amount, currency, cardholder email) or PDF. A memo column, if present, is dropped without being read.</p>
+        </div>
+      </section>
+
+      <section class="source" aria-labelledby="planned">
+        <h2 id="planned">Other sources</h2>
+        <p class="prose">Other sources are planned. Each will be listed here in the same form, with what it reads, what it never reads and the permissions it requests, before it is offered.</p>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="integrations.html">Integrations and data use</a></li>
+          <li><a href="security.html">Security</a></li>
+          <li><a href="privacy.html">Privacy policy (draft)</a></li>
+          <li><a href="terms.html">Terms (draft)</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <p>Plumbline is in development. These pages describe how the system is designed to work.</p>
+      <p>This site sets no cookies and runs no scripts.</p>
+    </div>
+  </footer>
+</body>
+</html>
